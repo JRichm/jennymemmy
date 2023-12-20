@@ -11,22 +11,23 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String
+  id          Int @id @default(autoincrement())
+  name        String
 }
 
 model Picture {
-  id Int @id @default(autoincrement())
-  date DateTime
-  created DateTime
-  updated DateTime
+  id          Int @id @default(autoincrement())
+  location    String
+  date        DateTime
+  created     DateTime
+  updated     DateTime
 }
 
 model Memory {
-  id Int @id @default(autoincrement())
-  name String
+  id          Int @id @default(autoincrement())
+  name        String
   description String
-  date DateTime
-  created DateTime
-  updated DateTime?
+  date        DateTime
+  created     DateTime
+  updated     DateTime?
 }

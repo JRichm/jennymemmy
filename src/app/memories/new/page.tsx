@@ -3,19 +3,46 @@
 import MainHeader from "@/app/components/mainHeader"
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useState } from "react"
+
+import { saveMemory } from "@/app/actions"
 
 export default function NewMemoryPage() {
 
     interface formDataType {
-        memoryName: string;
-        memoryDate: Date;
-        memoryDetails: string;
+        name: string;
+        date: Date;
+        details: string;
     }
 
     const [uploadedImages, setUploadedImages] = useState<string[]>([])  // array of images uploaded so far
     const [uploadedImageDate, setUploadedImageDate] = useState("")      // suggested date when user uploads pictures with attached date
-    const [formData, setFormData] = useState<formDataType>({memoryName: "", memoryDate: new Date(), memoryDetails: ""}) // form data / user input
+    const [formData, setFormData] = useState<formDataType>({name: "", date: new Date(), details: ""}) // form data / user input
+
+    // handle user input 
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+
+        // get values from changed input
+        const { name, value } = e.target;
+
+        // update formData with new input        
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+
+        console.log(formData)
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        try {
+            const memory = await saveMemory(formData, uploadedImages)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     // handle image upload
     async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement & { target: { files: FileList } }>) {
@@ -71,7 +98,7 @@ export default function NewMemoryPage() {
         }
 
         return (
-            <div className={`grid grid-cols-${numCols} gap-2`}>
+            <div className={`grid grid-cols-4 gap-2`}>
                 { elements }
             </div>
         );
@@ -81,13 +108,13 @@ export default function NewMemoryPage() {
         <main>
             <MainHeader />
             <div className="flex justify-center">
-                <form className="flex flex-col bg-gray-200 p-4 gap-1">
+                <form className="flex flex-col bg-gray-200 p-4 gap-1" onSubmit={ handleSubmit }>
                     <label htmlFor="mem-name">Memory Name</label>
-                    <input type='text' name="mem-name"></input> 
+                    <input type='text' name="name" onChange={handleInputChange}></input> 
                     <label htmlFor="mem-date">Memory Date</label>
-                    <input type='date' name="mem-date"></input>
+                    <input type='date' name="date" onChange={handleInputChange}></input>
                     <label htmlFor="mem-name">Memory Details </label>
-                    <input type='text' name="mem-details"></input>
+                    <input type='text' name="details" onChange={handleInputChange}></input>
                     <label htmlFor="mem-pictures">Memory Pictures</label>
                     <AttachedImages />
                     <input type="file" accept="image/*" onChange={handleImageUpload}></input>
@@ -96,6 +123,14 @@ export default function NewMemoryPage() {
                         <input type="submit" value="Add" className="bg-green-200 px-3 rounded-l hover:cursor-pointer"></input>
                     </span>
                 </form>
+            </div>
+            <div>
+                <p>Name</p>
+                <p>{formData['name']}</p>
+                <p>Date</p>
+                <p>Details</p>
+                <p>{formData.details}</p>
+                <p>Pictures</p>
             </div>
         </main>
     )
