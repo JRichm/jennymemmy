@@ -1,6 +1,7 @@
 "use server"
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from "./db";
+import fs from 'fs';
 
 const saveLocation = '/savedImages';
 
@@ -29,8 +30,10 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
                     // other properties
                 },
             });
-            // fs.writeFile is not available on the client side
-            // Handle file writing on the server side
+
+            // save picture to local storage at public/savedImages/
+            await fs.promises.writeFile(`.${saveLocation}.jpg`, image, 'base64')
+
             console.log('The file would be saved at:', location);
             return { location, date: formData.date, time: time /*, other properties */ };
         }));

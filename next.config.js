@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    serverRuntimeConfig: {
+        apiBodySizeLimit: '10mb',
+    }
+}
 
 module.exports = nextConfig
