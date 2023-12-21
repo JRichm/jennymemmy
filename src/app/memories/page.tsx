@@ -25,7 +25,7 @@ export default async function MemoriesPage() {
                             {memory.updated ? <p className="w-[300px] text-center">{memory.updated.toDateString()}</p> : null}
                             
                             {/* Render pictures if available */}
-                            {memory.pictures && memory.pictures.length > 0 && (
+                            {memory.pictures && memory.pictures.length > 0 ? (
                                 <div className="flex flex-row gap-2">
                                     {memory.pictures.map((picture) => (
                                         <div key={picture.id}>
@@ -33,7 +33,7 @@ export default async function MemoriesPage() {
                                         </div>
                                     ))}
                                 </div>
-                            )}
+                            ) : <div className="h-[50px] place-items-center flex"><p>No associated images</p></div>}
                         </div>
                     ))}
                 </div>
