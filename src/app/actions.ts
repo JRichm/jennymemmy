@@ -19,10 +19,6 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
         }
     })
 
-    console.log('memory')
-    console.log(memory)
-    console.log(JSON.stringify(memory))
-
     try {
         // Ensure that the directory exists
         const directoryPath = path.join(process.cwd(), 'public', saveLocation);
@@ -38,7 +34,7 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
 
             var base64Data = image.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
 
-            await fs.writeFile(imagePath, base64Data, 'base64', err => console.log(err))
+            await fs.writeFile(imagePath, base64Data, 'base64', err => console.log(err));
 
             // Create a single picture record for each image
             const savedPicture = await prisma.picture.create({
@@ -49,9 +45,6 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
                     memoryId: memory.id
                 },
             });
-
-            console.log('Entered in the database');
-            console.log(savedPicture);
 
             return { location, date: formData.date, time: time /*, other properties */ };
         }));

@@ -30,8 +30,6 @@ export default function NewMemoryPage() {
             ...prevData,
             [name]: value,
         }));
-
-        console.log(formData)
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +39,7 @@ export default function NewMemoryPage() {
             const memory = await saveMemory(formData, uploadedImages)
             .then(() => window.location.href = '/memories')
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }
 
