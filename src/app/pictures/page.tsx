@@ -17,9 +17,10 @@ export default async function PicturesPage() {
                             <p className="w-[300px] text-center">{picture.location}</p>
                             <p className="w-[300px] text-center">{picture.date.toDateString()}</p>
                             <p className="w-[300px] text-center">{picture.created.toDateString()}</p>
-                            <p className="w-[300px] text-center">{picture.updated.toDateString()}</p>
+                            {picture.updated ? <p className="w-[300px] text-center">{picture.updated.toDateString()}</p> : null}
+                            {picture.memoryId ? <p className="w-[300px] text-center">{picture.memoryId}</p> : null}
                             <div>
-                                <img src={`${picture.location}.jpg`} className="max-h-[50px]"></img>
+                                <img src={`${picture.location}`} className="max-h-[50px]"></img>
                             </div>
                         </div>
                     ))}

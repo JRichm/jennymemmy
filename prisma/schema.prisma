@@ -20,7 +20,9 @@ model Picture {
   location    String
   date        DateTime
   created     DateTime
-  updated     DateTime
+  updated     DateTime?
+  memoryId    Int?  // reference to the memory model
+  memory      Memory? @relation(fields: [memoryId], references: [id])
 }
 
 model Memory {
@@ -30,4 +32,5 @@ model Memory {
   date        DateTime
   created     DateTime
   updated     DateTime?
+  pictures    Picture[] // one-to-many relationship
 }
