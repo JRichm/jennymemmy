@@ -1,5 +1,4 @@
 "use server"
-import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from "./db";
 import fs from 'fs';
 import path from 'path';
@@ -10,7 +9,9 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
 
     const time = new Date();
 
+    // create db record of memory
     const memory = await prisma.memory.create({
+        // user input
         data: {
             name: formData.name,
             description: formData.details,
@@ -19,25 +20,34 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
         }
     })
 
+    // save pictures
     try {
-        // Ensure that the directory exists
+
+        // Ensure that the save directory exists
         const directoryPath = path.join(process.cwd(), 'public', saveLocation);
         if (!fs.existsSync(directoryPath)) {
             fs.mkdirSync(directoryPath, { recursive: true });
         }
 
+        // save each image individually
         const savedPictures = await Promise.all(uploadedImages.map(async (image: string) => {
+            // name of saved image
             const imageName = Math.random().toString(36).substring(7);
             const imageFileName = `${imageName}.jpg`;
+
+            // saved image location
             const location = `${saveLocation}/${imageFileName}`;
             const imagePath = path.join(directoryPath, imageFileName);
 
+            // image data
             var base64Data = image.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
 
+            // write image file
             await fs.writeFile(imagePath, base64Data, 'base64', err => console.log(err));
 
-            // Create a single picture record for each image
+            // Create db record for the image
             const savedPicture = await prisma.picture.create({
+                // image data
                 data: {
                     location: location,
                     date: new Date(formData.date).toISOString(),
@@ -46,7 +56,7 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
                 },
             });
 
-            return { location, date: formData.date, time: time /*, other properties */ };
+            return { location, date: formData.date, time: time };
         }));
 
         const filteredPictures = savedPictures.filter(Boolean);

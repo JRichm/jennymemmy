@@ -15,10 +15,14 @@ export default function NewMemoryPage() {
         details: string;
     }
 
-    const [uploadedImages, setUploadedImages] = useState<string[]>([])  // array of images uploaded so far
-    const [uploadedImageDate, setUploadedImageDate] = useState("")      // suggested date when user uploads pictures with attached date
-    const [formData, setFormData] = useState<formDataType>({name: "", date: new Date(), details: ""}) // form data / user input
+    // array of images uploaded so far
+    const [uploadedImages, setUploadedImages] = useState<string[]>([])
 
+    // form data / user input
+    const [formData, setFormData] = useState<formDataType>({name: "", date: new Date(), details: ""}) 
+
+
+    
     // handle user input 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
 
@@ -32,12 +36,22 @@ export default function NewMemoryPage() {
         }));
     }
 
+    // handler for form submission
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+        // prevent page refresh
         e.preventDefault()
 
+        // user input validation
+
         try {
-            const memory = await saveMemory(formData, uploadedImages)
+            // save memory
+            await saveMemory(formData, uploadedImages)
+
+            // redirect back to all memories
             .then(() => window.location.href = '/memories')
+        
+        // error handling
         } catch (err) {
             console.error(err)
         }
@@ -72,9 +86,14 @@ export default function NewMemoryPage() {
     }
 
 
+    // uploaded image preview 
     const AttachedImages = () => {
-        const numImages = uploadedImages.length;
+
+        // number of columns to display
         const numCols = 4;
+        const numImages = uploadedImages.length;
+
+        // calculate number of rows based on how many images have been uploaded and number of columns
         let numRows = Math.ceil(numImages / numCols);
         if (numRows == 0) numRows = 1
        
