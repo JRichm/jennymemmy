@@ -7,14 +7,21 @@ import path from 'path';
 const saveLocation = '/savedImages';
 
 export async function saveMemory(formData: { name: string, date: Date, details: string }, uploadedImages: string[]) {
-    console.log('saving memory')
-
-    console.log('formData')
-    console.log(formData)
-    console.log('uploadedImages')
-    console.log(uploadedImages)
 
     const time = new Date();
+
+    const memory = await prisma.memory.create({
+        data: {
+            name: formData.name,
+            description: formData.details,
+            date: time.toISOString(),
+            created: time
+        }
+    })
+
+    console.log('memory')
+    console.log(memory)
+    console.log(JSON.stringify(memory))
 
     try {
         // Ensure that the directory exists
@@ -29,11 +36,7 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
             const location = `${saveLocation}/${imageFileName}`;
             const imagePath = path.join(directoryPath, imageFileName);
 
-            console.log('image')
-            console.log(image)
             var base64Data = image.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
-            console.log('base64Data')
-            console.log(base64Data)
 
             await fs.writeFile(imagePath, base64Data, 'base64', err => console.log(err))
 
@@ -43,13 +46,12 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
                     location: location,
                     date: new Date(formData.date).toISOString(),
                     created: time.toISOString(),
-                    updated: time.toISOString(),
-                    // other properties
+                    memoryId: memory.id
                 },
             });
 
             console.log('Entered in the database');
-            console.log('The file would be saved at:', location);
+            console.log(savedPicture);
 
             return { location, date: formData.date, time: time /*, other properties */ };
         }));

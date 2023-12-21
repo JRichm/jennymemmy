@@ -39,6 +39,7 @@ export default function NewMemoryPage() {
 
         try {
             const memory = await saveMemory(formData, uploadedImages)
+            .then(() => window.location.href = '/memories')
         } catch (err) {
             console.log(err)
         }
@@ -85,8 +86,8 @@ export default function NewMemoryPage() {
             elements.push(
                 <div key={i} className='flex aspect-square'>
                     { i < numImages ? (
-                        <div className='h-full w-full'>
-                            <img src={uploadedImages[i]} alt={`uploaded-${i}`} className='h-full w-full object-cover' />
+                        <div className='max-w-[80px] max-h-[80px] rounded'>
+                            <img src={uploadedImages[i]} alt={`uploaded-${i}`} className='rounded-lg max-w-[80px] max-h-[80px]' />
                         </div>
                     ) : (
                         <div className='bg-black/10 rounded-lg h-full w-full flex items-center justify-center hover:bg-black/25 cursor-pointer transition-all'>
@@ -107,7 +108,7 @@ export default function NewMemoryPage() {
     return (
         <main>
             <MainHeader />
-            <div className="flex justify-center">
+            <div className="flex justify-center p-12">
                 <form className="flex flex-col bg-gray-200 p-4 gap-1" onSubmit={ handleSubmit }>
                     <label htmlFor="mem-name">Memory Name</label>
                     <input type='text' name="name" onChange={handleInputChange}></input> 
@@ -123,14 +124,6 @@ export default function NewMemoryPage() {
                         <input type="submit" value="Add" className="bg-green-200 px-3 rounded-l hover:cursor-pointer"></input>
                     </span>
                 </form>
-            </div>
-            <div>
-                <p>Name</p>
-                <p>{formData['name']}</p>
-                <p>Date</p>
-                <p>Details</p>
-                <p>{formData.details}</p>
-                <p>Pictures</p>
             </div>
         </main>
     )
