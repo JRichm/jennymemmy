@@ -53,13 +53,21 @@ export default function Timeline() {
     }
 
     return (
-        <div className='relative'>
-            <hr className='absolute border-black block border-2 self-center w-full mt-[23px]' />
-                <div className='timeline'>
-                    {Object.values(fetchedMemories).map((memory) => (
-                        <TimelineMemory key={memory.name} memory={memory} />
-                    ))}
-                </div>
+        <div>
+            <div className='relative'>
+                <hr className='absolute border-black block border-2 self-center w-full mt-[23px]' />
+                    <div className='timeline'>
+                        {Object.values(fetchedMemories).map((inner) => (
+                            inner.map((memory: MemoryType) => (
+                                <TimelineMemory key={memory.name} memory={memory} />
+                            ))
+                        ))}
+                    </div>
+            </div>
+            <div>
+                <p>{JSON.stringify(Object.values(fetchedMemories)[0])}</p>
+            </div>
         </div>
+
     )
 };
