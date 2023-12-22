@@ -10,7 +10,11 @@ export default function Home() {
       <div>
         <div>
           <p>timeline</p>
-          <Timeline />
+          <div className='max-w-[1000px] w-full self-center'>
+            <div className='bg-blue-100 p-5'>
+              <Timeline />
+            </div>
+          </div>
         </div>
         <p>memory highlights</p>
         <p>interactive map</p>

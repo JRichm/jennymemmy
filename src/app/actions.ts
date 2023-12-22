@@ -15,7 +15,7 @@ export async function saveMemory(formData: { name: string, date: Date, details: 
         data: {
             name: formData.name,
             description: formData.details,
-            date: time.toISOString(),
+            date: new Date(formData.date).toISOString(),
             created: time
         }
     })

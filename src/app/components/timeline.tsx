@@ -53,8 +53,8 @@ export default function Timeline() {
     }
 
     return (
-        <div>
-            <hr />
+        <div className='relative'>
+            <hr className='absolute border-black block border-2 self-center w-full mt-[23px]' />
                 <div className='timeline'>
                     {Object.values(fetchedMemories).map((memory) => (
                         <TimelineMemory key={memory.name} memory={memory} />

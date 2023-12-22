@@ -21,7 +21,7 @@ export default async function MemoriesPage() {
                             <p className="w-[300px] text-center">{memory.name}</p>
                             <p className="w-[300px] text-center">{memory.description}</p>
                             <p className="w-[300px] text-center">{memory.date.toDateString()}</p>
-                            <p className="w-[300px] text-center">{memory.created.toDateString()}</p>
+                            {/* <p className="w-[300px] text-center">{memory.created.toDateString()}</p> */}
                             {memory.updated ? <p className="w-[300px] text-center">{memory.updated.toDateString()}</p> : null}
                             
                             {/* Render pictures if available */}
