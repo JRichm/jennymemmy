@@ -10,7 +10,7 @@ export default async function MemoriesPage() {
     });
 
     return (
-        <main>
+        <main className="flex flex-col">
             <MainHeader />
             <div>
                 <p>this is the memories page</p>

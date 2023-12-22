@@ -10,7 +10,7 @@ export default async function PicturesPage() {
     })
 
     return (
-        <main>
+        <main className="flex flex-col">
             <MainHeader />
             <div>
                 <p>this is the pictures page</p>

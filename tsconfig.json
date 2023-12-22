@@ -24,6 +24,6 @@
     "sourceMap": true,
     "outDir": "dist",
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/saveMemory.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/*.js"],
   "exclude": ["node_modules"]
 }

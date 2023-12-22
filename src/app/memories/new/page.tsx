@@ -22,7 +22,7 @@ export default function NewMemoryPage() {
     const [formData, setFormData] = useState<formDataType>({name: "", date: new Date(), details: ""}) 
 
 
-    
+
     // handle user input 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
 
@@ -123,7 +123,7 @@ export default function NewMemoryPage() {
     }
 
     return (
-        <main>
+        <main className="flex flex-col">
             <MainHeader />
             <div className="flex justify-center p-12">
                 <form className="flex flex-col bg-gray-200 p-4 gap-1" onSubmit={ handleSubmit }>
